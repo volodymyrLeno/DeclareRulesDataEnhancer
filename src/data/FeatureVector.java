@@ -40,7 +40,7 @@ public class FeatureVector {
             return false;
         }
         FeatureVector fv = (FeatureVector) o;
-        return fv.from.equals(this) && fv.to.equals(this);
+        return fv.from.equals(this.from) && fv.to.equals(this.to);
     }
 
     @Override

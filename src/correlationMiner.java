@@ -6,12 +6,18 @@ import java.util.stream.Collectors;
 
 public final class correlationMiner {
 
-    public static void findCorrelations(String csvFile, List<DeclareConstraint> declareConstraints, boolean considerViolations, int k, double minNodeSize, Boolean pruning){
+    public static void findCorrelations(String file, List<DeclareConstraint> declareConstraints, boolean considerViolations, int k, double minNodeSize, Boolean pruning){
 
         List<Evaluation> evaluationResults = new ArrayList<>();
 
         long totalStartTime = System.currentTimeMillis();
-        HashMap<String, List<Event>> cases = logReader.readLog(csvFile);
+        HashMap<String, List<Event>> cases = new HashMap<>();
+        String format = file.substring(file.lastIndexOf(".") + 1);
+
+        if(format.equals("csv"))
+            cases = logReader.readCSV(file);
+        else if(format.equals("xes"))
+            cases = logReader.readXES(file);
 
         for (DeclareConstraint constraint: declareConstraints) {
             List<FeatureVector> fulfillments = rulesExtractor.extractFulfillments(cases, constraint);
