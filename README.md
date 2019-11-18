@@ -17,7 +17,7 @@ The tool requires the following input parameters:
 * considerViolations - specify whether violations of constraint have to be considered while searching for the rules (BOOLEAN)
 * k - number of clusters for K-Medoids algorithm (INTEGER)
 * minNodeSize - minimum relative number of instances covered by a rule (DOUBLE [0,1])
-* pruning - trun of/on pruning in RIPPER algorithm (BOOLEAN)
+* pruning - turn off/on pruning in RIPPER algorithm (BOOLEAN)
 
 The example of how to run the program:
 
