@@ -12,8 +12,8 @@ The initial distribution (DeclareRulesDataEnhancer.rar) includes:
 ## Usage
 
 The tool requires the following input parameters:
-* logFile - absolute path to the event log (STRING)
-* constraintsFile - absolute path to the file that contains the Declare constraints (STRING)
+* logFile - path to the event log (STRING)
+* constraintsFile - path to the file that contains the Declare constraints (STRING)
 * considerViolations - specify whether violations of constraint have to be considered while searching for the rules (BOOLEAN)
 * k - number of clusters for K-Medoids algorithm (INTEGER)
 * minNodeSize - minimum relative number of instances covered by a rule (DOUBLE [0,1])
