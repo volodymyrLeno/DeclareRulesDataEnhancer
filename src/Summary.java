@@ -1,7 +1,6 @@
 import data.Correlation;
 import data.Event;
 import data.FeatureVector;
-import data.Itemset;
 
 import java.util.ArrayList;
 import java.util.HashMap;

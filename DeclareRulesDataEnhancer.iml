@@ -74,5 +74,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="java libraries" level="project" />
   </component>
 </module>

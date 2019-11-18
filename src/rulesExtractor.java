@@ -1,10 +1,8 @@
 import data.DeclareConstraint;
 import data.Event;
 import data.FeatureVector;
-import data.Itemset;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
