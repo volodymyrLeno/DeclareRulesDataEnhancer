@@ -4,6 +4,14 @@
     <root id="archive" name="DeclareRulesDataEnhancer.jar">
       <element id="module-output" name="DeclareRulesDataEnhancer" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../weka_tool/weka/weka.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../java libraries/guava-20.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../java libraries/jaxb-api-2.3.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../java libraries/jaxb-core-2.3.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../java libraries/jaxb-impl-2.3.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../java libraries/OpenXES-20160212.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../java libraries/guava-20.0-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../java libraries/guava-20.0-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../java libraries/javax.activation-1.2.0.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

@@ -1,0 +1,5 @@
+response(SubmitLoanApplication,AssessApplication)
+response(SubmitLoanApplication,NotifyOutcome)
+responded existence(AssessApplication,CheckCareer)
+chain response(CheckCareer,CheckMedicalHistory)
+precedence(SubmitLoanApplication,NotifyOutcome)
