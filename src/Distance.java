@@ -66,6 +66,40 @@ public final class Distance {
         return distance/(fv1.from.size() + fv1.to.size());
     }
 
+    public static double computeDistance2(FeatureVector fv1, FeatureVector fv2, HashMap<String, HashMap<String, Double>> attrMax,
+                                         HashMap<String, HashMap<String, Double>> attrMin, HashMap<StringPair, Double> editDistances,
+                                         HashMap<String, HashMap<StringPair, Double>> rangesDistances){
+        double distance = 0.0;
+
+        List<String> attributesTo = new ArrayList<>() {{addAll(fv1.to.keySet()); addAll(fv2.to.keySet());}};
+
+        attributesTo = attributesTo.stream().distinct().collect(Collectors.toList());
+
+        for(String key: attributesTo){
+            if(fv1.to.containsKey(key) && fv2.to.containsKey(key)){
+                if(correlationMiner.tryParseDouble(fv1.to.get(key))){
+                    if (attrMax.get("to").get(key) != null && attrMin.get("to").get(key) != null) {
+                        distance += computeDistance(Double.parseDouble(fv1.to.get(key)), Double.parseDouble(fv2.to.get(key)), attrMax.get("to").get(key), attrMin.get("to").get(key));
+                    }
+                }
+                else if(fv1.to.get(key).equalsIgnoreCase("true") || fv1.to.get(key).equalsIgnoreCase("false"))
+                    distance += computeDistance(Boolean.valueOf(fv1.to.get(key)), Boolean.valueOf(fv2.to.get(key)));
+                else if(isRange(fv1.to.get(key))){
+                    StringPair pair = new StringPair(fv1.to.get(key), fv2.to.get(key));
+                    distance += rangesDistances.get(key).get(pair);
+                }
+                else
+                {
+                    StringPair pair = new StringPair(fv1.to.get(key), fv2.to.get(key));
+                    distance += editDistances.get(pair);
+                }
+            }
+            else
+                distance += 1.0;
+        }
+        return distance/fv1.to.size();
+    }
+
     public static double computeDistance(double value1, double value2, double max, double min){
         if(Double.isNaN(value1) || Double.isNaN(value2))
             return 1.0;

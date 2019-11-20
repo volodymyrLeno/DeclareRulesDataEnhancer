@@ -22,11 +22,13 @@ public class KMedoidsClusterer {
     private HashMap<StringPair, Double> editDistances;
     private HashMap<String, HashMap<StringPair, Double>> rangesDistances;
 
+    private Boolean considerActivations;
+
     public KMedoidsClusterer(){
-        this(4, 100);
+        this(4, 100, true);
     }
 
-    public KMedoidsClusterer(int numberOfClusters, int maxIterations){
+    public KMedoidsClusterer(int numberOfClusters, int maxIterations, Boolean considerActivations){
         this.numberOfClusters = numberOfClusters;
         this.maxIterations = maxIterations;
         this.rg = new Random(System.currentTimeMillis());
@@ -34,6 +36,8 @@ public class KMedoidsClusterer {
         this.rangesSummary = new RangesSummary();
         this.editDistances = new HashMap<>();
         this.rangesDistances = new HashMap<>();
+
+        this.considerActivations = considerActivations;
 
         this.output = new Cluster[numberOfClusters];
         for(int i = 0; i < numberOfClusters; i++)
@@ -68,10 +72,18 @@ public class KMedoidsClusterer {
     private int[] assign(FeatureVector[] medoids, List<FeatureVector> points) {
         int[] out = new int[points.size()];
         for (int i = 0; i < points.size(); i++) {
-            double bestDistance = Distance.computeDistance(points.get(i), medoids[0], rangesSummary.getAttrMax(), rangesSummary.getAttrMin(), editDistances, rangesDistances);
+            double bestDistance;
+            if(considerActivations)
+                bestDistance = Distance.computeDistance(points.get(i), medoids[0], rangesSummary.getAttrMax(), rangesSummary.getAttrMin(), editDistances, rangesDistances);
+            else
+                bestDistance = Distance.computeDistance2(points.get(i), medoids[0], rangesSummary.getAttrMax(), rangesSummary.getAttrMin(), editDistances, rangesDistances);
             int bestIndex = 0;
             for(int j = 1; j < medoids.length; j++){
-                double tmpDistance = Distance.computeDistance(points.get(i), medoids[j], rangesSummary.getAttrMax(), rangesSummary.getAttrMin(), editDistances, rangesDistances);
+                double tmpDistance;
+                if(considerActivations)
+                    tmpDistance = Distance.computeDistance(points.get(i), medoids[j], rangesSummary.getAttrMax(), rangesSummary.getAttrMin(), editDistances, rangesDistances);
+                else
+                    tmpDistance = Distance.computeDistance2(points.get(i), medoids[j], rangesSummary.getAttrMax(), rangesSummary.getAttrMin(), editDistances, rangesDistances);
                 if(tmpDistance < bestDistance){
                     bestDistance = tmpDistance;
                     bestIndex = j;
@@ -156,7 +168,10 @@ public class KMedoidsClusterer {
         List<FeatureVector> knearest = new ArrayList<>();
         HashMap<FeatureVector, Double> distances = new HashMap<>();
         for(FeatureVector fv: points)
-            distances.put(fv, Math.abs(Distance.computeDistance(fv, centroid, rangesSummary.getAttrMax(), rangesSummary.getAttrMin(), editDistances, rangesDistances)));
+            if(considerActivations)
+                distances.put(fv, Math.abs(Distance.computeDistance(fv, centroid, rangesSummary.getAttrMax(), rangesSummary.getAttrMin(), editDistances, rangesDistances)));
+            else
+                distances.put(fv, Math.abs(Distance.computeDistance2(fv, centroid, rangesSummary.getAttrMax(), rangesSummary.getAttrMin(), editDistances, rangesDistances)));
 
         distances = distances.entrySet().stream().sorted(comparingByValue()).collect(toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2, LinkedHashMap::new));
 

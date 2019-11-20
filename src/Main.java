@@ -10,8 +10,9 @@ public class Main {
         Integer k = Integer.parseInt(args[3]);
         Double minNodeSize = Double.parseDouble(args[4]);
         Boolean pruning = Boolean.parseBoolean(args[5]);
+        Boolean considerActivations = Boolean.parseBoolean(args[6]);
 
         List<DeclareConstraint> declareConstraints = logReader.readConstraints(constraintsFile);
-        correlationMiner.findCorrelations(csvFile, declareConstraints, considerViolations, k, minNodeSize, pruning);
+        correlationMiner.findCorrelations(csvFile, declareConstraints, considerViolations, k, minNodeSize, pruning, considerActivations);
     }
 }

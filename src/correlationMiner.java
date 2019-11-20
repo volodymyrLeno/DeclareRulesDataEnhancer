@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public final class correlationMiner {
 
-    public static void findCorrelations(String file, List<DeclareConstraint> declareConstraints, boolean considerViolations, int k, double minNodeSize, Boolean pruning){
+    public static void findCorrelations(String file, List<DeclareConstraint> declareConstraints, boolean considerViolations, int k, double minNodeSize, Boolean pruning, Boolean considerActivations){
 
         List<Evaluation> evaluationResults = new ArrayList<>();
 
@@ -28,7 +28,7 @@ public final class correlationMiner {
 
             List<Cluster> clusters;
 
-            KMedoidsClusterer kMedoids = new KMedoidsClusterer(k, 10000);
+            KMedoidsClusterer kMedoids = new KMedoidsClusterer(k, 10000, considerActivations);
             clusters = kMedoids.clustering(fulfillments);
 
             String ruleType = constraint.ruleType;
