@@ -18,11 +18,12 @@ The tool requires the following input parameters:
 * k - number of clusters for K-Medoids algorithm (INTEGER)
 * minNodeSize - minimum relative number of instances covered by a rule (DOUBLE [0,1])
 * pruning - turn off/on pruning in RIPPER algorithm (BOOLEAN)
+* considerActivations - perform clustering based on both activation and target payloads of feature vectors
 
 The example of how to run the program:
 
 ```
-java -jar DeclareRulesDataEnhancer.jar runningExample.csv constraints.txt false 2 0.05 true
+java -jar DeclareRulesDataEnhancer.jar runningExample.csv constraints.txt false 2 0.05 true true
 ```
 
 ## Requirements
