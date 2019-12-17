@@ -22,23 +22,32 @@ public final class correlationMiner {
         for (DeclareConstraint constraint: declareConstraints) {
             List<FeatureVector> fulfillments = rulesExtractor.extractFulfillments(cases, constraint);
 
+            var count = 0;
+            for(var caseID: cases.keySet())
+                for(var event: cases.get(caseID))
+                    if(event.activityName.equals("action not required"))
+                        count++;
+
             //logWriter.writeLog("C:\\Volodymyr\\PhD\\JOURNAL EXTENSION\\Real Experiments\\BPIC2017\\" + rule + "(" + itemset.items.get(0) + "," + itemset.items.get(1) + ").csv", featureVectors);
 
             long startTime = System.currentTimeMillis();
 
-            List<Cluster> clusters;
+
+            List<Cluster> clusters = new ArrayList<>();
 
             KMedoidsClusterer kMedoids = new KMedoidsClusterer(k, 10000, considerActivations);
-            clusters = kMedoids.clustering(fulfillments);
-
             String ruleType = constraint.ruleType;
             String relationName = constraint.toString();
 
-            for (Cluster cluster : clusters) {
-                if (cluster.getElements().size() > 0 && cluster.getLabel() == null) {
-                    String summary = getSummary(cluster, fulfillments, relationName, minNodeSize);
-                    cluster.setLabel(summary);
-                    cluster.giveLabels();
+            if(fulfillments.size() != 0) {
+                clusters = kMedoids.clustering(fulfillments);
+
+                for (Cluster cluster : clusters) {
+                    if (cluster.getElements().size() > 0 && cluster.getLabel() == null) {
+                        String summary = getSummary(cluster, fulfillments, relationName, minNodeSize);
+                        cluster.setLabel(summary);
+                        cluster.giveLabels();
+                    }
                 }
             }
 
